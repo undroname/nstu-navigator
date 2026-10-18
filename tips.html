@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Напутствия | НГТУ НЭТИ Навигатор</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">⚡ НГТУ<span>.</span>НЭТИ Навигатор</a>
+            <nav>
+                <a href="index.html" class="nav-btn">Главная</a>
+                <a href="docs.html" class="nav-btn">Документы</a>
+                <a href="food.html" class="nav-btn">Питание</a>
+                <a href="tips.html" class="nav-btn active">Напутствия</a>
+            </nav>
+        </div>
+    </header>
+    <div class="main-content">
+        <h1>🎓 База знаний: Напутствия</h1>
+        <p style="color: var(--text-light); margin-bottom: 25px;">Разверни интересующий гайд, чтобы узнать правила университета:</p>
+        
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">Как устроена нумерация аудиторий? <span>▼</span></button>
+            <div class="accordion-content"><p style="padding: 15px 0;">Например, ауд. 1-305 означает: 1-й корпус, 3 этаж, 305 кабинет. Помните, что 1 и 4 корпуса соединены переходами.</p></div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">Как зайти в Личный кабинет НГТУ? <span>▼</span></button>
+            <div class="accordion-content"><p style="padding: 15px 0;">В сентябре старосте вашей группы выдадут логины и пароли для всех студентов в Центре информационных технологий (ЦИТ).</p></div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-header" onclick="toggleAccordion(this)">Как закрыть первую сессию? <span>▼</span></button>
+            <div class="accordion-content"><p style="padding: 15px 0;">Главное — вовремя сдавать расчетно-графические работы (РГР) и лабораторные, чтобы не копить хвосты к декабрю.</p></div>
+        </div>
+
+        <div class="quote-block">
+            <strong>💬 Напутствие:</strong><br>
+            «Помните девиз нашего университета: "Технологии, которые работают". Оптимизируйте свое время и разбирайтесь во всем последовательно».
+        </div>
+    </div>
+    <script>
+        function toggleAccordion(element) {
+            const content = element.nextElementSibling;
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+    </script>
+</body>
+</html>
