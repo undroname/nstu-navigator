@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Напутствия | НГТУ НЭТИ Навигатор</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
-            <a href="index.html" class="logo">⚡ НГТУ<span>.</span>НЭТИ Навигатор</a>
+            <a href="index.html" class="logo">НГТУ<span>.</span>НЭТИ Навигатор</a>
             <nav>
                 <a href="index.html" class="nav-btn">Главная</a>
                 <a href="docs.html" class="nav-btn">Документы</a>
@@ -22,25 +22,43 @@
         <h1>🎓 База знаний: Напутствия</h1>
         <p style="color: var(--text-light); margin-bottom: 25px;">Разверни интересующий гайд, чтобы узнать правила университета:</p>
         
-        <div class="accordion-item">
-            <button class="accordion-header" onclick="toggleAccordion(this)">Как устроена нумерация аудиторий? <span>▼</span></button>
-            <div class="accordion-content"><p style="padding: 15px 0;">Например, ауд. 1-305 означает: 1-й корпус, 3 этаж, 305 кабинет. Помните, что 1 и 4 корпуса соединены переходами.</p></div>
-        </div>
-        <div class="accordion-item">
-            <button class="accordion-header" onclick="toggleAccordion(this)">Как зайти в Личный кабинет НГТУ? <span>▼</span></button>
-            <div class="accordion-content"><p style="padding: 15px 0;">В сентябре старосте вашей группы выдадут логины и пароли для всех студентов в Центре информационных технологий (ЦИТ).</p></div>
-        </div>
-        <div class="accordion-item">
-            <button class="accordion-header" onclick="toggleAccordion(this)">Как закрыть первую сессию? <span>▼</span></button>
-            <div class="accordion-content"><p style="padding: 15px 0;">Главное — вовремя сдавать расчетно-графические работы (РГР) и лабораторные, чтобы не копить хвосты к декабрю.</p></div>
-        </div>
+        <!-- Сюда JavaScript будет вставлять гайды в реальном времени -->
+        <div id="accordion-container"><p>Загрузка актуальных гайдов...</p></div>
 
         <div class="quote-block">
-            <strong>💬 Напутствие:</strong><br>
+            <strong>Напутствие:</strong><br>
             «Помните девиз нашего университета: "Технологии, которые работают". Оптимизируйте свое время и разбирайтесь во всем последовательно».
         </div>
     </div>
+
     <script>
+        // Функция, которая стягивает данные из текстового JSON-файла в реалтайме
+        async function loadGuides() {
+            try {
+                const response = await fetch('./content.json');
+                const data = await response.json();
+                const container = document.getElementById('accordion-container');
+                container.innerHTML = ''; // Очищаем текст загрузки
+
+                data.guides.forEach(guide => {
+                    const item = document.createElement('div');
+                    item.className = 'accordion-item';
+                    item.innerHTML = `
+                        <button class="accordion-header" onclick="toggleAccordion(this)">
+                            ${guide.title} <span>▼</span>
+                        </button>
+                        <div class="accordion-content">
+                            <p style="padding: 15px 0;">${guide.text}</p>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            } catch (error) {
+                document.getElementById('accordion-container').innerHTML = '<p style="color:red;">Не удалось загрузить гайды.</p>';
+                console.error("Ошибка загрузки:", error);
+            }
+        }
+
         function toggleAccordion(element) {
             const content = element.nextElementSibling;
             if (content.style.maxHeight && content.style.maxHeight !== '0px') {
@@ -49,6 +67,9 @@
                 content.style.maxHeight = content.scrollHeight + "px";
             }
         }
+
+        // Запускаем загрузку при открытии страницы
+        window.addEventListener('DOMContentLoaded', loadGuides);
     </script>
 </body>
 </html>

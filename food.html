@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Питание | НГТУ НЭТИ Навигатор</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
-            <a href="index.html" class="logo">⚡ НГТУ<span>.</span>НЭТИ Навигатор</a>
+            <a href="index.html" class="logo">НГТУ<span>.</span>НЭТИ Навигатор</a>
             <nav>
                 <a href="index.html" class="nav-btn">Главная</a>
                 <a href="docs.html" class="nav-btn">Документы</a>
@@ -19,32 +19,44 @@
         </div>
     </header>
     <div class="main-content">
-        <h1>🍔 Питание: Инженерный рацион</h1>
+        <h1>Питание: Инженерный рацион</h1>
         <p style="color: var(--text-light); margin-bottom: 30px;">Карта проверенных мест для сытного обеда на территории кампуса.</p>
-        <div class="food-grid">
-            <div class="card">
-                <h3>1. Столовая Научной Библиотеки НГТУ</h3>
-                <div class="price-tag">💸 Средний чек: 190–260 ₽</div>
-                <p class="pro"><strong>👍 Плюсы:</strong> Просторно, современная раздача, большой выбор.</p>
-                <p class="con"><strong>🛑 Минусы:</strong> Находится в стороне от учебных корпусов.</p>
-            </div>
-            <div class="card">
-                <h3>2. Столовая 2-го учебного корпуса</h3>
-                <div class="price-tag">💸 Средний чек: 170–230 ₽</div>
-                <p class="pro"><strong>👍 Плюсы:</strong> Центр кампуса, сытные порции, отличные супы.</p>
-                <p class="con"><strong>🛑 Минусы:</strong> На больших переменах огромные очереди.</p>
-            </div>
-            <div class="card">
-                <h3>3. Буфеты НЭТИ (1, 4 и 7 корпуса)</h3>
-                <div class="price-tag">💸 Средний чек: 100–140 ₽</div>
-                <p class="pro"><strong>👍 Плюсы:</strong> Быстро купить пиццу или чай прямо на перерыве.</p>
-                <p class="con"><strong>🛑 Минусы:</strong> Подходит только для быстрого перекуса.</p>
-            </div>
-        </div>
+        
+        <div class="food-grid" id="food-container"><p>Загрузка меню и столовых...</p></div>
+        
         <div class="tips-block">
-            <h3>💡 Лайфхак для расчетливых:</h3>
-            <p>На проспекте Маркса (возле метро «Студенческая») расположено много фастфудов. Почти везде дают скидки до 15% по студенческому билету НГТУ!</p>
+            <h3>Лайфхак для расчетливых:</h3>
+            <p id="food-tip">Загрузка лайфхака...</p>
         </div>
     </div>
+
+    <script>
+        async function loadFood() {
+            try {
+                const response = await fetch('./content.json');
+                const data = await response.json();
+                
+                const container = document.getElementById('food-container');
+                container.innerHTML = '';
+
+                data.food.places.forEach(place => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <h3>${place.title}</h3>
+                        <div class="price-tag">💸 Средний чек: ${place.price}</div>
+                        <p class="pro"><strong>👍 Плюсы:</strong> ${place.pro}</p>
+                        <p class="con"><strong>🛑 Минусы:</strong> ${place.con}</p>
+                    `;
+                    container.appendChild(card);
+                });
+
+                document.getElementById('food-tip').innerText = data.food.lunchbox_tip;
+            } catch (error) {
+                console.error("Ошибка загрузки данных о питании:", error);
+            }
+        }
+        window.addEventListener('DOMContentLoaded', loadFood);
+    </script>
 </body>
 </html>

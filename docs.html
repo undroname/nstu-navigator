@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Документы | НГТУ НЭТИ Навигатор</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
-            <a href="index.html" class="logo">⚡ НГТУ<span>.</span>НЭТИ Навигатор</a>
+            <a href="index.html" class="logo">НГТУ<span>.</span>НЭТИ Навигатор</a>
             <nav>
                 <a href="index.html" class="nav-btn">Главная</a>
                 <a href="docs.html" class="nav-btn active">Документы</a>
@@ -19,22 +19,42 @@
         </div>
     </header>
     <div class="main-content">
-        <h1>📂 Документы: Чек-лист первокурсника</h1>
+        <h1>Документы: Чек-лист первокурсника</h1>
         <p style="color: var(--text-light); margin-bottom: 20px;">Собери этот пакет бумаг заранее, чтобы не тратить время в очередях.</p>
         <span class="badge-tech">Панель контроля сборки</span>
-        <h2>📌 В деканат факультета (в первые дни сентября)</h2>
-        <ul class="doc-list">
-            <li class="doc-item"><input type="checkbox"> <div><strong>Паспорт гражданина РФ</strong> + 2 копии (разворот с фото и регистрация).</div></li>
-            <li class="doc-item"><input type="checkbox"> <div><strong>Оригинал документа об образовании</strong> (аттестат или диплом СПО).</div></li>
-            <li class="doc-item"><input type="checkbox"> <div><strong>СНИЛС</strong> + копия.</div></li>
-            <li class="doc-item"><input type="checkbox"> <div><strong>6 фотографий (3х4, матовые)</strong> — для зачетки и студенческого.</div></li>
-        </ul>
-        <h2>🏢 Для заселения в студгородок НГТУ</h2>
-        <ul class="doc-list">
-            <li class="doc-item"><input type="checkbox"> <div><strong>Медицинская справка 086/у</strong> (с отметкой флюорографии).</div></li>
-            <li class="doc-item"><input type="checkbox"> <div><strong>Полис ОМС</strong> + копия.</div></li>
-            <li class="doc-item"><input type="checkbox"> <div><strong>Прививочный сертификат</strong> (оригинал).</div></li>
-        </ul>
+        
+        <h2>В деканат факультета (в первые дни сентября)</h2>
+        <ul class="doc-list" id="dekanat-container"><p>Загрузка списков...</p></ul>
+        
+        <h2>Для заселения в студгородок НГТУ</h2>
+        <ul class="doc-list" id="hostel-container"><p>Загрузка списков...</p></ul>
     </div>
+
+    <script>
+        async function loadDocs() {
+            try {
+                const response = await fetch('./content.json');
+                const data = await response.json();
+                
+                // Функция для сборки пунктов списка с чекбоксами
+                const renderList = (containerId, items) => {
+                    const container = document.getElementById(containerId);
+                    container.innerHTML = '';
+                    items.forEach(text => {
+                        const li = document.createElement('li');
+                        li.className = 'doc-item';
+                        li.innerHTML = `<input type="checkbox"> <div>${text}</div>`;
+                        container.appendChild(li);
+                    });
+                };
+
+                renderList('dekanat-container', data.docs.dekanat);
+                renderList('hostel-container', data.docs.hostel);
+            } catch (error) {
+                console.error("Ошибка загрузки документов:", error);
+            }
+        }
+        window.addEventListener('DOMContentLoaded', loadDocs);
+    </script>
 </body>
 </html>
