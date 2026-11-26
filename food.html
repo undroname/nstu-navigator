@@ -3,60 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Питание | НГТУ НЭТИ Навигатор</title>
+    <title>Питание | НГТУ. Навигатор</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
-            <a href="index.html" class="logo">НГТУ<span>.</span>НЭТИ Навигатор</a>
-            <nav>
+            <a href="index.html" class="brand-link">
+                <span class="brand-short">НГТУ</span>
+                <span class="brand-divider"></span>
+                <span class="brand-full">Новосибирский государственный технический университет</span>
+            </a>
+
+            <nav class="nav-links" id="main-nav">
                 <a href="index.html" class="nav-btn">Главная</a>
                 <a href="docs.html" class="nav-btn">Документы</a>
                 <a href="food.html" class="nav-btn active">Питание</a>
-                <a href="tips.html" class="nav-btn">Напутствия</a>
+                <a href="tips.html" class="nav-btn">Напутствие</a>
             </nav>
+
+            <div class="header-right">
+                <div class="cap-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="30" height="30">
+                        <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+                        <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/>
+                        <path d="M22 10v6"/>
+                    </svg>
+                </div>
+                <button class="burger-btn" id="burger-btn" aria-label="Открыть меню">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="22" height="22">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
-    <div class="main-content">
-        <h1>Питание: Инженерный рацион</h1>
-        <p style="color: var(--text-light); margin-bottom: 30px;">Карта проверенных мест для сытного обеда на территории кампуса.</p>
-        
-        <div class="food-grid" id="food-container"><p>Загрузка меню и столовых...</p></div>
-        
-        <div class="tips-block">
-            <h3>Советы по питанию:</h3>
-            <p id="food-tip">Загрузка лайфхака...</p>
+
+    <main class="main-content">
+        <!-- Верхняя панель по скетчу + фильтры навигации -->
+        <div class="food-topbar">
+            <div class="food-title-box">Еда рядом с НГТУ</div>
+            <div class="food-filters">
+                <button class="subnav-pill active" data-filter="all">Все места</button>
+                <button class="subnav-pill" data-filter="canteen">Столовые</button>
+                <button class="subnav-pill" data-filter="cafe">Кафе и фастфуд</button>
+                <button class="subnav-pill" data-filter="snack">Перекус и магазины</button>
+            </div>
         </div>
-    </div>
+
+        <!-- Сетка: 2 крупных блока в ряд на ПК, 1 на мобильных -->
+        <section class="food-grid" id="food-grid">
+
+            <!-- КАРТОЧКА 1 -->
+            <article class="food-card" data-category="canteen">
+                <div class="food-card-media">
+                    <img src="./img/food-library.jpg" alt="Столовая Библиотеки" onerror="this.style.display='none'">
+                    <div class="food-media-placeholder">
+                        <strong>Столовая Библиотеки</strong>
+                        <span>Место под фото (img/food-library.jpg)</span>
+                    </div>
+                    <div class="food-badges">
+                        <span class="food-cat-badge">Столовая</span>
+                        <span class="food-price-badge">190–260 ₽</span>
+                    </div>
+                </div>
+                <div class="food-card-body">
+                    <div class="food-card-header">
+                        <h3>Столовая Библиотеки</h3>
+                        <div class="food-address">📍 проспект Карла Маркса, 20</div>
+                    </div>
+                    <div class="check-breakdown">
+                        <div class="check-breakdown-title">Что входит в средний чек (~230 ₽)</div>
+                        <p>Порция супа (борщ или рассольник), гарнир (гречка/пюре) с куриной котлетой, простой салат из капусты, 2 кусочка хлеба и стакан компота.</p>
+                    </div>
+                    <div class="food-pros-cons">
+                        <div class="food-pro"><strong>+ Плюсы:</strong> Просторный зал, хороший выбор блюд, обычно меньше толкучки.</div>
+                        <div class="food-con"><strong>− Минусы:</strong> В стороне от основных учебных корпусов.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 2 -->
+            <article class="food-card" data-category="canteen">
+                <div class="food-card-media">
+                    <img src="./img/food-2k.jpg" alt="Столовая 2-го корпуса" onerror="this.style.display='none'">
+                    <div class="food-media-placeholder">
+                        <strong>Столовая 2-го корпуса</strong>
+                        <span>Место под фото (img/food-2k.jpg)</span>
+                    </div>
+                    <div class="food-badges">
+                        <span class="food-cat-badge">Столовая</span>
+                        <span class="food-price-badge">170–230 ₽</span>
+                    </div>
+                </div>
+                <div class="food-card-body">
+                    <div class="food-card-header">
+                        <h3>Столовая 2-го корпуса</h3>
+                        <div class="food-address">📍 проспект Карла Маркса, 20 к. 2</div>
+                    </div>
+                    <div class="check-breakdown">
+                        <div class="check-breakdown-title">Что входит в средний чек (~200 ₽)</div>
+                        <p>Полноценное второе (макароны или рис + гуляш/тефтеля), салат оливье или винегрет и чай с булочкой.</p>
+                    </div>
+                    <div class="food-pros-cons">
+                        <div class="food-pro"><strong>+ Плюсы:</strong> Самый центр кампуса, очень бюджетные цены.</div>
+                        <div class="food-con"><strong>− Минусы:</strong> Большие очереди на большой перемене.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 3 -->
+            <article class="food-card" data-category="cafe">
+                <div class="food-card-media media-red">
+                    <img src="./img/food-vilka.jpg" alt="Вилка-Ложка" onerror="this.style.display='none'">
+                    <div class="food-media-placeholder">
+                        <strong>Вилка-Ложка</strong>
+                        <span>Место под фото (img/food-vilka.jpg)</span>
+                    </div>
+                    <div class="food-badges">
+                        <span class="food-cat-badge">Кафе-столовая</span>
+                        <span class="food-price-badge">200–300 ₽</span>
+                    </div>
+                </div>
+                <div class="food-card-body">
+                    <div class="food-card-header">
+                        <h3>Вилка-Ложка</h3>
+                        <div class="food-address">📍 проспект Карла Маркса, 37</div>
+                    </div>
+                    <div class="check-breakdown">
+                        <div class="check-breakdown-title">Что входит в средний чек (~260 ₽)</div>
+                        <p>Готовый комплексный обед: суп дня, горячее с гарниром (например, пюре с куриным филе), морс и хлеб.</p>
+                    </div>
+                    <div class="food-pros-cons">
+                        <div class="food-pro"><strong>+ Плюсы:</strong> Большой выбор, стабильное качество, есть комбо-обеды.</div>
+                        <div class="food-con"><strong>− Минусы:</strong> Очереди в обеденное время (12:00–14:00).</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 4 -->
+            <article class="food-card" data-category="snack">
+                <div class="food-card-media media-dark">
+                    <img src="./img/food-bufet.jpg" alt="Буфеты НЭТИ" onerror="this.style.display='none'">
+                    <div class="food-media-placeholder">
+                        <strong>Буфеты НЭТИ</strong>
+                        <span>Место под фото (img/food-bufet.jpg)</span>
+                    </div>
+                    <div class="food-badges">
+                        <span class="food-cat-badge">Быстрый перекус</span>
+                        <span class="food-price-badge">100–140 ₽</span>
+                    </div>
+                </div>
+                <div class="food-card-body">
+                    <div class="food-card-header">
+                        <h3>Буфеты НЭТИ</h3>
+                        <div class="food-address">📍 проспект Карла Маркса, 20 к. 2 (и другие корпуса)</div>
+                    </div>
+                    <div class="check-breakdown">
+                        <div class="check-breakdown-title">Что входит в средний чек (~120 ₽)</div>
+                        <p>Сосиска в тесте или мини-пицца (около 60–80 ₽) + стакан чая, кофе 3-в-1 или сок.</p>
+                    </div>
+                    <div class="food-pros-cons">
+                        <div class="food-pro"><strong>+ Плюсы:</strong> Можно успеть купить за 10-минутную перемену прямо в корпусе.</div>
+                        <div class="food-con"><strong>− Минусы:</strong> Подходит только для перекуса, без горячих супов.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 5 -->
+            <article class="food-card" data-category="cafe">
+                <div class="food-card-media media-red">
+                    <img src="./img/food-grill1.jpg" alt="Гриль №1" onerror="this.style.display='none'">
+                    <div class="food-media-placeholder">
+                        <strong>Гриль №1</strong>
+                        <span>Место под фото (img/food-grill1.jpg)</span>
+                    </div>
+                    <div class="food-badges">
+                        <span class="food-cat-badge">Фастфуд · 24/7</span>
+                        <span class="food-price-badge">~350 ₽</span>
+                    </div>
+                </div>
+                <div class="food-card-body">
+                    <div class="food-card-header">
+                        <h3>Гриль №1</h3>
+                        <div class="food-address">📍 проспект Карла Маркса, 39</div>
+                    </div>
+                    <div class="check-breakdown">
+                        <div class="check-breakdown-title">Что входит в средний чек (~350 ₽)</div>
+                        <p>Стандартная классическая шаурма с курицей и овощами + напиток (кола/чай) или порция картошки фри.</p>
+                    </div>
+                    <div class="food-pros-cons">
+                        <div class="food-pro"><strong>+ Плюсы:</strong> Работает круглосуточно, сытно после вечерних пар.</div>
+                        <div class="food-con"><strong>− Минусы:</strong> Не самый полезный вариант на каждый день.</div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- КАРТОЧКА 6 -->
+            <article class="food-card" data-category="snack">
+                <div class="food-card-media">
+                    <img src="./img/food-yarche.jpg" alt="Ярче!" onerror="this.style.display='none'">
+                    <div class="food-media-placeholder">
+                        <strong>Супермаркет «Ярче!»</strong>
+                        <span>Место под фото (img/food-yarche.jpg)</span>
+                    </div>
+                    <div class="food-badges">
+                        <span class="food-cat-badge">Магазин</span>
+                        <span class="food-price-badge">200–400 ₽</span>
+                    </div>
+                </div>
+                <div class="food-card-body">
+                    <div class="food-card-header">
+                        <h3>Ярче!</h3>
+                        <div class="food-address">📍 проспект Карла Маркса, 55</div>
+                    </div>
+                    <div class="check-breakdown">
+                        <div class="check-breakdown-title">Что входит в средний чек (~300 ₽)</div>
+                        <p>Свежая выпечка (2 слойки) и кофе из автомата на месте, либо базовый набор продуктов в общагу: пачка макарон, сосиски/тушёнка, молоко и хлеб.</p>
+                    </div>
+                    <div class="food-pros-cons">
+                        <div class="food-pro"><strong>+ Плюсы:</strong> Дешёвые продукты и собственная свежая выпечка.</div>
+                        <div class="food-con"><strong>− Минусы:</strong> Нужно пройтись от кампуса НГТУ.</div>
+                    </div>
+                </div>
+            </article>
+
+        </section>
+
+        <div class="tips-callout">
+            <h3>Совет по питанию</h3>
+            <p>Рекомендуется брать домашнюю еду с собой в контейнере — так выходит заметно дешевле и полезнее, чем питаться фастфудом между парами.</p>
+        </div>
+    </main>
+
+    <footer>
+        НГТУ. Навигатор — путеводитель для поступающих и студентов НГТУ НЭТИ
+    </footer>
 
     <script>
-        async function loadFood() {
-            try {
-                const response = await fetch('./content.json');
-                const data = await response.json();
-                
-                const container = document.getElementById('food-container');
-                container.innerHTML = '';
+        // Бургер-меню
+        document.getElementById('burger-btn').addEventListener('click', () => {
+            document.getElementById('main-nav').classList.toggle('open');
+        });
 
-                data.food.places.forEach(place => {
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `
-                        <h3>${place.title}</h3>
-                        <div class="price-tag">💸 Средний чек: ${place.price}</div>
-                        <p class="pro"><strong>👍 Плюсы:</strong> ${place.pro}</p>
-                        <p class="con"><strong>🛑 Минусы:</strong> ${place.con}</p>
-                    `;
-                    container.appendChild(card);
+        // Фильтрация карточек по категориям
+        const filterBtns = document.querySelectorAll('.food-filters .subnav-pill');
+        const cards = document.querySelectorAll('.food-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const category = btn.dataset.filter;
+                cards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
                 });
-
-                document.getElementById('food-tip').innerText = data.food.lunchbox_tip;
-            } catch (error) {
-                console.error("Ошибка загрузки данных о питании:", error);
-            }
-        }
-        window.addEventListener('DOMContentLoaded', loadFood);
+            });
+        });
     </script>
 </body>
 </html>

@@ -3,72 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Напутствия | НГТУ НЭТИ Навигатор</title>
+    <title>Напутствие | НГТУ. Навигатор</title>
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <header>
         <div class="nav-container">
-            <a href="index.html" class="logo">НГТУ<span>.</span>НЭТИ Навигатор</a>
-            <nav>
+            <a href="index.html" class="brand-link">
+                <span class="brand-short">НГТУ</span>
+                <span class="brand-divider"></span>
+                <span class="brand-full">Новосибирский государственный технический университет</span>
+            </a>
+
+            <nav class="nav-links" id="main-nav">
                 <a href="index.html" class="nav-btn">Главная</a>
                 <a href="docs.html" class="nav-btn">Документы</a>
                 <a href="food.html" class="nav-btn">Питание</a>
-                <a href="tips.html" class="nav-btn active">Напутствия</a>
+                <a href="tips.html" class="nav-btn active">Напутствие</a>
             </nav>
+
+            <div class="header-right">
+                <div class="cap-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="30" height="30">
+                        <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+                        <path d="M6 12v5c0 1.66 2.69 3 6 3s6-1.34 6-3v-5"/>
+                        <path d="M22 10v6"/>
+                    </svg>
+                </div>
+                <button class="burger-btn" id="burger-btn" aria-label="Открыть меню">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="22" height="22">
+                        <path d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
-    <div class="main-content">
-        <h1>🎓 База знаний: Напутствия</h1>
-        <p style="color: var(--text-light); margin-bottom: 25px;">Разверни интересующий гайд, чтобы узнать правила университета:</p>
-        
-        <!-- Сюда JavaScript будет вставлять гайды в реальном времени -->
-        <div id="accordion-container"><p>Загрузка актуальных гайдов...</p></div>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h1><span>Напутствие:</span> база знаний</h1>
+            <p>Нажми на нужный вопрос, чтобы развернуть краткую инструкцию.</p>
+        </div>
+
+        <div id="accordion-container">
+            <p>Загрузка актуальных гайдов...</p>
+        </div>
 
         <div class="quote-block">
             <strong>Напутствие:</strong><br>
-            «Помните девиз нашего университета: "Технологии, которые работают". Оптимизируйте свое время и разбирайтесь во всем последовательно».
+            «Помните девиз нашего университета: "Технологии, которые работают". Оптимизируйте своё время и разбирайтесь со всеми задачами последовательно».
         </div>
-    </div>
+    </main>
+
+    <footer>
+        НГТУ. Навигатор — путеводитель для поступающих и студентов НГТУ НЭТИ
+    </footer>
 
     <script>
-        // Функция, которая стягивает данные из текстового JSON-файла в реалтайме
+        document.getElementById('burger-btn').addEventListener('click', () => {
+            document.getElementById('main-nav').classList.toggle('open');
+        });
+
         async function loadGuides() {
+            const container = document.getElementById('accordion-container');
             try {
                 const response = await fetch('./content.json');
                 const data = await response.json();
-                const container = document.getElementById('accordion-container');
-                container.innerHTML = ''; // Очищаем текст загрузки
+                container.innerHTML = '';
 
                 data.guides.forEach(guide => {
                     const item = document.createElement('div');
                     item.className = 'accordion-item';
                     item.innerHTML = `
-                        <button class="accordion-header" onclick="toggleAccordion(this)">
-                            ${guide.title} <span>▼</span>
+                        <button class="accordion-header" type="button">
+                            <span>${guide.title}</span>
+                            <span class="accordion-arrow">▼</span>
                         </button>
                         <div class="accordion-content">
-                            <p style="padding: 15px 0;">${guide.text}</p>
+                            <div class="accordion-inner">${guide.text}</div>
                         </div>
                     `;
+
+                    const btn = item.querySelector('.accordion-header');
+                    const content = item.querySelector('.accordion-content');
+
+                    btn.addEventListener('click', () => {
+                        const isOpen = item.classList.toggle('open');
+                        content.style.maxHeight = isOpen ? content.scrollHeight + 'px' : '0px';
+                    });
+
                     container.appendChild(item);
                 });
             } catch (error) {
-                document.getElementById('accordion-container').innerHTML = '<p style="color:red;">Не удалось загрузить гайды.</p>';
-                console.error("Ошибка загрузки:", error);
+                container.innerHTML = '<p style="color: var(--nstu-red);">Не удалось загрузить гайды. Убедись, что сайт запущен через локальный сервер (например, Live Server).</p>';
+                console.error('Ошибка загрузки:', error);
             }
         }
 
-        function toggleAccordion(element) {
-            const content = element.nextElementSibling;
-            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
-                content.style.maxHeight = '0px';
-            } else {
-                content.style.maxHeight = content.scrollHeight + "px";
-            }
-        }
-
-        // Запускаем загрузку при открытии страницы
         window.addEventListener('DOMContentLoaded', loadGuides);
     </script>
 </body>
